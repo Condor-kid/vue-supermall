@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     showGoods() {
-      return this.goods[currentType].list;
+      return this.goods[this.currentType].list;
     },
   },
   created() {
