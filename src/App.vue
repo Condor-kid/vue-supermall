@@ -15,7 +15,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "assets/css/base.css";
 .mainTabbar {
   z-index: 7;
