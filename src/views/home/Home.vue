@@ -9,6 +9,8 @@
       ref="scroll"
       :probe-type="3"
       @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
     >
       <home-swiper :banners="banners"></home-swiper>
       <home-recommend-view :recommends="recommends"></home-recommend-view>
@@ -116,6 +118,14 @@ export default {
       } else {
         this.isShowBackTop = false;
       }
+    },
+
+    //上拉加载更多
+    loadMore() {
+      // console.log("上拉加载更多2");
+      this.getHomeGoods(this.currentType);
+      this.$refs.scroll.finishPullUp();
+      // this.$refs.scroll.refresh();
     },
     //网络请求相关方法
     getHomeMultidata() {
