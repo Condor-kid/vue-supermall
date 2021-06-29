@@ -4,6 +4,15 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+
+    <tab-control
+      :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
+      ref="tabControl1"
+      class="tab-control"
+      v-show="isTabFixed"
+    ></tab-control>
+
     <scroll
       class="content"
       ref="scroll"
@@ -12,13 +21,16 @@
       :pull-up-load="true"
       @pullingUp="loadMore"
     >
-      <home-swiper :banners="banners"></home-swiper>
+      <home-swiper
+        :banners="banners"
+        @swiperImageLoad="swiperImageLoad"
+      ></home-swiper>
       <home-recommend-view :recommends="recommends"></home-recommend-view>
       <home-feature></home-feature>
       <tab-control
         :titles="['流行', '新款', '精选']"
-        class="tab-control"
         @tabClick="tabClick"
+        ref="tabControl2"
       ></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
@@ -71,6 +83,8 @@ export default {
       },
       currentType: "pop",
       isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
     };
   },
   computed: {
@@ -87,6 +101,7 @@ export default {
   },
   mounted() {
     // this.$refs.swiper;
+    // this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
   },
   methods: {
     //事件监听相关方法
@@ -103,6 +118,8 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.$refs.tabControl1.currentIndex = index;
+      this.$refs.tabControl2.currentIndex = index;
     },
 
     backClick() {
@@ -111,13 +128,23 @@ export default {
       this.$refs.scroll.scrollTo(0, 0, 1000);
     },
 
+    //监听滚动
     contentScroll(position) {
       // console.log(position);
+      //1.判断BackTop是否显示
       if (position.y < -1000) {
         this.isShowBackTop = true;
       } else {
         this.isShowBackTop = false;
       }
+
+      //2.决定tabControl是否吸顶
+      this.isTabFixed = -position.y > this.tabOffsetTop;
+    },
+
+    swiperImageLoad() {
+      // console.log(this.$refs.tabControl.$el.offsetTop);
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
 
     //上拉加载更多
@@ -150,24 +177,19 @@ export default {
 
 <style scoped>
 #home {
-  /* height: 100vh; */
-  padding-top: 44px;
+  height: 100vh;
+  position: relative;
+  /* padding-top: 44px; */
 }
 .home-nav {
   background-color: var(--color-tint);
   color: #fff;
 
-  position: fixed;
+  /* position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  z-index: 7;
-}
-.tab-control {
-  position: sticky;
-  top: 44px;
-  background-color: #fff;
-  z-index: 6;
+  z-index: 7; */
 }
 .content {
   overflow: hidden;
@@ -179,6 +201,10 @@ export default {
   /* height: 300px; */
   /* height: calc(100%); */
   /* overflow: hidden; */
+}
+.tab-control {
+  position: relative;
+  z-index: 9;
 }
 </style>
 
