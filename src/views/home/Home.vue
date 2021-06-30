@@ -85,6 +85,7 @@ export default {
       isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
+      saveY: 0,
     };
   },
   computed: {
@@ -102,6 +103,19 @@ export default {
   mounted() {
     // this.$refs.swiper;
     // this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+  },
+  destroy() {
+    console.log("home destroy");
+  },
+
+  activated() {
+    // console.log("home activated");
+    this.$refs.scroll.refresh();
+    this.$refs.scroll.scrollTo(0, this.saveY, 0);
+  },
+  deactivated() {
+    // console.log("home deactivated");
+    this.saveY = this.$refs.scroll.getScrollY();
   },
   methods: {
     //事件监听相关方法
