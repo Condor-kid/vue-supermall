@@ -3,7 +3,7 @@
     <keep-alive exclude="Detail">
       <router-view></router-view>
     </keep-alive>
-    <mainTabbar class="mainTabbar"></mainTabbar>
+    <mainTabbar v-show="this.$route.path.indexOf('detail') === -1"></mainTabbar>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 @import "assets/css/base.css";
-.mainTabbar {
+/* .mainTabbar {
   z-index: 7;
-}
+} */
 </style>
