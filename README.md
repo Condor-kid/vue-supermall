@@ -1,5 +1,7 @@
 # supermall
 
+### 项目的重点已完成，分类页无api调用和个人页没写(懒)
+
 ## Project setup
 ```
 npm install
