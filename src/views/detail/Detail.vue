@@ -26,10 +26,10 @@
         ></detail-comment-info>
         <goods-list :goods="recommends" ref="recommend"></goods-list>
       </scroll>
-      <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
-      <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
       <!-- <toast :message="message" :show="show"></toast> -->
     </div>
+    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+    <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
   </div>
 </template>
 
